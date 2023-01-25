@@ -5,11 +5,10 @@ import os
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn import svm
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score , recall_score , balanced_accuracy_score
 from sklearn.metrics import roc_curve , auc
 from sklearn.svm import SVC
 from sklearn.linear_model import LogisticRegression
-
 
 
 
@@ -68,3 +67,48 @@ plt.ylabel('True Positive Rate')
 plt.legend()
 
 plt.show()
+
+# accuracy_score of training data
+
+x_train_prediction_accuracy=model_SVC.predict(x_train)
+training_data_accuracy_score=accuracy_score(y_train,x_train_prediction_accuracy)
+print(f"Accuracy Score of training data : {training_data_accuracy_score * 100} %")
+
+# accuracy_score of testing data
+
+x_test_prediction_accuracy=model_SVC.predict(x_test)
+testing_data_accuracy_score=accuracy_score(y_test,x_test_prediction_accuracy)
+print(f"Accuracy Score of testing data : {testing_data_accuracy_score * 100} %")
+
+# recall_score of training data
+
+x_train_prediction_recall=model_SVC.predict(x_train)
+training_data_recall_score=recall_score(y_train,x_train_prediction_recall)
+print(f"recall(sensitivity) Score of training data : {training_data_recall_score * 100} %")
+
+# recall_score of testing data
+
+x_test_prediction_recall=model_SVC.predict(x_test)
+testing_data_recall_score=recall_score(y_test,x_test_prediction_recall)
+print(f"recall(sensitivity) Score of testing data : {testing_data_recall_score * 100} %")
+
+# balanced_score of training data
+
+x_train_prediction_balanced=model_SVC.predict(x_train)
+training_data_balanced_score=balanced_accuracy_score(y_train,x_train_prediction_balanced)
+
+# balanced_score of testing data
+
+x_test_prediction_balanced=model_SVC.predict(x_test)
+testing_data_balanced_score=balanced_accuracy_score(y_test,x_test_prediction_balanced)
+
+# specificity = (2*balanced) - (recall)
+# specificity_score of training data
+
+training_data_specificity_score=(2 * training_data_balanced_score) - (training_data_recall_score)
+print(f"specificity Score of training data : {training_data_specificity_score * 100} %")
+
+# specificity_score of testing data
+
+testing_data_specificity_score=(2 * testing_data_balanced_score) - (testing_data_recall_score)
+print(f"specificity Score of testing data : {testing_data_specificity_score * 100} %")
